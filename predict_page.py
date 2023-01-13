@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 
 def load_model():
-    with open('saved_steps.pkl', 'rb') as file:
+    with open('model_logistic.pkl', 'rb') as file:
         data = pickle.load(file)
     return data
 
@@ -14,7 +14,7 @@ model_logistic_loaded = data["model"]
 
 def show_predict_page():
     st.title("Heart Disease Prediction Using Machine Learning")
-    st.write("""### We need some information to predict the hear disease""")
+    st.write("""### We need some information to predict the heart disease""")
 
 
     
