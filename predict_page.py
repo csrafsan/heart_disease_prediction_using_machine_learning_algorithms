@@ -1,6 +1,29 @@
 import streamlit as st;
 import pickle 
 import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+import csv
+
+
+df = pd.read_csv('heartt.csv')
+df = df[["age", "sex", "ca", "trestbps", "chol","target"]]
+
+X = df.drop("target", axis=1)
+Y = df["target"]
+
+X_train,X_test,Y_train,Y_test = train_test_split(X,Y,test_size=0.2,random_state=0)
+
+from sklearn.linear_model import LogisticRegression
+model_logistic = LogisticRegression()
+model_logistic.fit(X_train,Y_train)
+
+y_pred_logistic = model_logistic.predict(X_test)
+
+
+from sklearn.metrics import accuracy_score
+logistic_Acc = accuracy_score(Y_test,y_pred_logistic)
+
 
 def load_model():
     with open('model_logistic.pkl', 'rb') as file:
@@ -55,6 +78,7 @@ def show_predict_page():
         else:
             st.subheader("Heart disease prediction result is Negative!")
 
+        st.subheader(f"Accuracy of LogisticRegression is {logistic_Acc}")
 
         # st.subheader(f"Heart disease prediction is {y_pred_logistic[0]}")
         # st.subheader(f"Heart disease prediction is {y_pred_logistic}")
